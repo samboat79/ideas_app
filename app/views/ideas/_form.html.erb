@@ -1,0 +1,38 @@
+<%= form_with(model: idea, local: true) do |form| %>
+  <% if idea.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(idea.errors.count, "error") %> prohibited this idea from being saved:</h2>
+
+      <ul>
+        <% idea.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label :name , :class=>"font-weight-bold"  %> :
+    <%= form.text_field :name %>
+  </div>
+<br>
+  <div class="field form-group">
+    <%= form.label :content, :class=>"font-weight-bold"  %>:
+    <%= form.text_area :content %>
+  </div>
+  <div class="field form-group">
+    <%= form.label :category_id , :class=>"font-weight-bold"  %>:
+    <%= form.collection_select :category_id, Category.all,:id,:name %>
+  </div>
+
+  <%= hidden_field_tag 'idea[user_id]', current_user.id %>
+ <%= form.hidden_field :idea_id %>
+
+  <div class="field form-group">
+    <%= form.label :picture , :class=>"font-weight-bold" %> :
+    <%= form.file_field :picture %>
+  </div>
+  <div class="actions">
+    <%= form.submit :class=>"btn btn-primary" %>
+  </div>
+<% end %>
